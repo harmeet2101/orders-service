@@ -33,7 +33,10 @@ jobs:
             docker build -t $ECR_REGISTRY/harmeet/order-service-repo:latest .
             docker push $ECR_REGISTRY/harmeet/order-service-repo:latest
             echo "image=$ECR_REGISTRY/harmeet/order-service-repo:latest" >> $GITHUB_OUTPUT
-
+      - name: Download current task definition
+        run: |
+          aws ecs describe-task-definition --task-definition order-service-family --query taskDefinition > task-definition.json
+          echo %taskDefinition%
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
