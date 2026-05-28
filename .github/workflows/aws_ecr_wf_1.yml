@@ -41,7 +41,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-         task-definition: order-service-task-definition
+         task-definition: task-definition.json
          container-name: order-service-container
          image: ${{ steps.build-image.outputs.image }}
 
@@ -49,6 +49,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
          task-definition: ${{ steps.task-def.outputs.task-definition }}
-         service: order-service-service01
-         cluster: order-service-cluster
+         service: order-service-family-service
+         cluster: Order-Service-Cluster
          wait-for-service-stability: true       
